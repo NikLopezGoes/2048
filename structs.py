@@ -4,16 +4,16 @@ class state:
         self.board = state.makeboard()
     
     def makeboard():
-        board = [[None] * 4 for _ in range(4)]
-        for i in range(4):
-            for j in range(4):
-                board[i][j] = None
+        board = [[0] * 4 for _ in range(4)]
         return board
     def __str__(self):
+        final = ""
         for i in range(4):
-            print("___________")
             for j in range(4):
-                print(f"|{self.board[i][j].value}|")
+                # print(f"|{self.board[i][j]}|")
+                final += f" {self.board[i][j]} "
+            final += "\n"
+        return final
 
 
 class node:

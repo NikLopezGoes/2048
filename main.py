@@ -1,20 +1,39 @@
 import game_internals
 import structs
+import random
 
-gameOver = True
+gameOver = False
 gameBoard = structs.state()
+number = random.randint(0,9)
+
+if(number == 4):
+    game_internals.add_number(gameBoard.board,4)
+else:
+    game_internals.add_number(gameBoard.board,2)
+
 while(gameOver == False):
     print("please input a move W, A, S, D")
-    game_internals.print_board()
+    print(gameBoard)
     direction = input()
-    if(direction == 'D'):
-        gameBoard.board = game_internals.moveRight()
-    elif(direction == 'A'):
-        gameBoard.board = game_internals.moveLeft()
-    elif(direction == 'W'):
-        gameBoard.board = game_internals.moveUp()
-    elif(direction == 'S'):
-        gameBoard.board = game_internals.moveDown()
-    
-    if(game_internals.isGameOver() == True):
+    if(direction == 'd'):
+        (grid,changed) = game_internals.move_right(gameBoard.board)
+        gameBoard.board = grid
+    elif(direction == 'a'):
+        (grid,changed) = game_internals.move_left(gameBoard.board)
+        gameBoard.board = grid
+    elif(direction == 'w'):
+        (grid,changed) = game_internals.move_up(gameBoard.board)
+        gameBoard.board = grid
+    elif(direction == 's'):
+        (grid,changed) = game_internals.move_down(gameBoard.board)
+        gameBoard.board = grid
+    if(game_internals.isGameOver(gameBoard.board) == True):
         gameOver = True
+        break
+    else:
+        number = random.randint(0,9)
+        if(number == 4):
+            game_internals.add_number(gameBoard.board,4)
+        else:
+            game_internals.add_number(gameBoard.board,2)
+
