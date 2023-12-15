@@ -86,7 +86,7 @@ def probaility(number):
     else:
         return 0
 
-def greedy_search(board): #greedy algorithm will just loop over the possible moves and output highest score
+def greedy_search(board): #greedy algorithm will just loop over the possible moves and output highest score at depth 1
     valid_moves = get_moves(board)
     best_move = None
     best_score = 0
