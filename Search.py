@@ -85,3 +85,24 @@ def probaility(number):
         return 0.1
     else:
         return 0
+
+def greedy_search(board): #greedy algorithm will just loop over the possible moves and output highest score
+    valid_moves = get_moves(board)
+    best_move = None
+    best_score = 0
+    for i in range(len(valid_moves)):
+        if(board[i] == 'w'):
+            (grid ,changed, result_score) = game_internals.move_up(board)
+        elif(board[i] == 'a'):
+            (grid,changed,result_score) = game_internals.move_left(board)
+            
+        elif(board[i] == 's'):
+            (grid,changed,result_score ) = game_internals.move_down(board)
+        elif(board[i] == 'd'):
+            (grid,changed,result_score) = game_internals.move_right(board)
+        
+        if(result_score >= best_score):
+            best_score = result_score
+            best_move = board[i]
+    
+    return best_move
