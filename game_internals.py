@@ -6,6 +6,11 @@ def print_board(state):
         for j in range((4)):
             print(state.board[i][j])
 
+def checkLegality(changed):
+	if(changed == False):
+		print("not a legal move")
+	return changed
+
 
 def isGameOver(grid):
     for i in range(4):
@@ -118,7 +123,7 @@ def compress(mat):
 # function to merge the cells
 # in matrix after compressing
 def merge(mat):
-	
+	score =0
 	changed = False
 	
 	for i in range(4):
@@ -133,13 +138,12 @@ def merge(mat):
 				# empty the next cell
 				mat[i][j] = mat[i][j] * 2
 				mat[i][j + 1] = 0
-
+				score += mat[i][j]
 				# make bool variable True indicating
 				# the new grid after merging is
 				# different.
 				changed = True
-
-	return mat, changed
+	return mat, changed, score
 
 # function to reverse the matrix
 # means reversing the content of
@@ -171,7 +175,7 @@ def move_left(grid):
 	new_grid, changed1 = compress(grid)
 
 	# then merge the cells.
-	new_grid, changed2 = merge(new_grid)
+	new_grid, changed2, score = merge(new_grid)
 	
 	changed = changed1 or changed2
 
@@ -181,7 +185,7 @@ def move_left(grid):
 	# return new matrix and bool changed
 	# telling whether the grid is same
 	# or different
-	return new_grid, changed
+	return new_grid, changed ,score
 
 # function to update the matrix
 # if we move / swipe right
@@ -192,12 +196,12 @@ def move_right(grid):
 	new_grid = reverse(grid)
 
 	# then move left
-	new_grid, changed = move_left(new_grid)
+	new_grid, changed, score = move_left(new_grid)
 
 	# then again reverse matrix will
 	# give us desired result
 	new_grid = reverse(new_grid)
-	return new_grid, changed
+	return new_grid, changed, score
 
 # function to update the matrix
 # if we move / swipe up
@@ -209,12 +213,12 @@ def move_up(grid):
 
 	# then move left (calling all
 	# included functions) then
-	new_grid, changed = move_left(new_grid)
+	new_grid, changed, score = move_left(new_grid)
 
 	# again take transpose will give
 	# desired results
 	new_grid = transpose(new_grid)
-	return new_grid, changed
+	return new_grid, changed, score
 
 # function to update the matrix
 # if we move / swipe down
@@ -224,9 +228,9 @@ def move_down(grid):
 	new_grid = transpose(grid)
 
 	# move right and then again
-	new_grid, changed = move_right(new_grid)
+	new_grid, changed, score = move_right(new_grid)
 
 	# take transpose will give desired
 	# results.
 	new_grid = transpose(new_grid)
-	return new_grid, changed
+	return new_grid, changed, score
